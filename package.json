@@ -1,0 +1,13 @@
+{
+  "name": "kevinye8477-github-io-slidev",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.0.0"
+  }
+}
