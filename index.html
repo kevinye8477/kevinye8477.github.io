@@ -1,1 +1,563 @@
-hello word
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>墾丁悠閒兩天一夜｜好友放鬆之旅</title>
+  <!-- Google Fonts: Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #f97316;
+      --accent-light: #ffedd5;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #fef3c7;
+      --badge-text: #b45309;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+      color: #ffffff;
+      padding: 40px 20px 32px;
+      text-align: center;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Summary Overview Grid */
+    .overview-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .overview-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .info-item {
+      background: var(--primary-light);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .highlights-list {
+      list-style: none;
+      background: #f1f5f9;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .highlights-list li {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .highlights-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlights-list li::before {
+      content: "✨";
+      font-size: 0.85rem;
+    }
+
+    /* Accordion Days */
+    .day-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .day-header {
+      padding: 18px 20px;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s;
+    }
+
+    .day-header:hover {
+      background-color: #f8fafc;
+    }
+
+    .day-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .day-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .day-heading {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .toggle-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
+    .day-content {
+      padding: 0 20px 20px;
+      display: block;
+    }
+
+    .day-content.collapsed {
+      display: none;
+    }
+
+    /* Focus & Tips Box */
+    .day-meta-box {
+      background: #fafafa;
+      border-left: 4px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 4px 8px 8px 4px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+    }
+
+    .meta-row {
+      margin-bottom: 6px;
+    }
+    .meta-row:last-child { margin-bottom: 0; }
+    .meta-label { font-weight: 700; color: var(--text-main); }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -20px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .timeline-time {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .timeline-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .check-badge {
+      display: inline-block;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--primary-dark);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .map-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .share-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+
+    .share-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badge">墾丁放鬆之旅</div>
+    <h1>🏖️️ 兩天一夜好友行程</h1>
+    <p>海風、夕陽、老宅咖啡與後壁湖海鮮的悠閒步調</p>
+  </header>
+
+  <main class="container">
+
+    <!-- 行程總覽 -->
+    <section class="overview-card">
+      <div class="overview-title">📌 行程簡介資訊</div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">目的地與天數</div>
+          <div class="info-value">墾丁 2 天 1 夜</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">同行成員 / 步調</div>
+          <div class="info-value">一群朋友 / 悠閒放鬆</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">預估每人費用</div>
+          <div class="info-value">約 NT$ 3,500 - 5,000</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">主要交通方式</div>
+          <div class="info-value">高鐵 + 租車 / 機車</div>
+        </div>
+      </div>
+
+      <ul class="highlights-list">
+        <li>白砂灣絕美沙灘夕陽，享受海邊放空時光</li>
+        <li>恆春老鎮特色餐廳與風格老宅咖啡館漫遊</li>
+        <li>後壁湖超高 CP 值鮮甜生魚片與海鮮大餐</li>
+        <li>龍磐公園壯麗海崖風光，遠眺太平洋無邊際海景</li>
+      </ul>
+    </section>
+
+    <!-- DAY 1 -->
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay('day1')">
+        <div class="day-title-group">
+          <span class="day-tag">Day 01</span>
+          <div class="day-heading">恆春老街漫遊 ➔ 白砂灣日落 ➔ 夜市聚會</div>
+        </div>
+        <div class="toggle-icon" id="day1-icon">▲</div>
+      </div>
+
+      <div class="day-content" id="day1">
+        <div class="day-meta-box">
+          <div class="meta-row"><span class="meta-label">🎯 本日重點：</span>沙灘夕陽與海邊聚會熱鬧氛圍</div>
+          <div class="meta-row"><span class="meta-label">🚆 交通建議：</span>抵達左營高鐵後轉乘墾丁快線或租車自駕前往恆春。</div>
+          <div class="meta-row"><span class="meta-label">🍽️ 用餐建議：</span>午餐：恆春老區美食（波波廚房/老街小吃）；晚餐：墾丁大街夜市與沙灘酒吧。</div>
+          <div class="meta-row"><span class="meta-label">⚠️ 注意事項：</span>午後紫外線強注意防曬；白砂灣踏浪請注意安全浪況。</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">11:30 - 13:30</span>
+              <span class="timeline-title">
+                恆春老街與波波廚房 
+                <span class="check-badge">出發前再確認</span>
+              </span>
+              <a href="https://maps.google.com?q=波波廚房" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">抵達恆春，在充滿復古氛圍的波波廚房或周邊老街小吃享用輕鬆午餐。（熱門餐廳建議提早訂位）</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">14:00 - 15:30</span>
+              <span class="timeline-title">民宿 Check-in 歇息</span>
+            </div>
+            <div class="timeline-desc">前往民宿辦理入住，放下行李休息片刻，避開正午最炎熱的太陽。</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">16:00 - 18:00</span>
+              <span class="timeline-title">白砂灣（看海與夕陽）</span>
+              <a href="https://maps.google.com?q=白砂灣" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">墾丁最美沙灘之一，一起踩水、拍照、坐在沙灘上看夕陽漸漸沉入海平面。</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">18:30 - 21:00</span>
+              <span class="timeline-title">墾丁大街夜市</span>
+              <a href="https://maps.google.com?q=墾丁大街" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">邊逛邊吃夜市美食（烤玉米、山豬肉香腸、調酒飲品），享受美好的夜晚氛圍。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay('day2')">
+        <div class="day-title-group">
+          <span class="day-tag">Day 02</span>
+          <div class="day-heading">龍磐海景 ➔ 後壁湖生魚片 ➔ 老宅咖啡館</div>
+        </div>
+        <div class="toggle-icon" id="day2-icon">▼</div>
+      </div>
+
+      <div class="day-content collapsed" id="day2">
+        <div class="day-meta-box">
+          <div class="meta-row"><span class="meta-label">🎯 本日重點：</span>太平洋壯麗海崖與高品質海鮮下午茶</div>
+          <div class="meta-row"><span class="meta-label">🚆 交通建議：</span>各景點距離約 15-20 分鐘車程，車程流暢。</div>
+          <div class="meta-row"><span class="meta-label">🍽️ 用餐建議：</span>午餐：後壁湖邱家/阿興生魚片；下午茶：肥春號或樹夏飲事老宅咖啡。</div>
+          <div class="meta-row"><span class="meta-label">⚠️ 注意事項：</span>龍磐公園風勢較強，拍照請注意腳下石灰岩地形與安全。</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">09:30 - 11:30</span>
+              <span class="timeline-title">龍磐公園</span>
+              <a href="https://maps.google.com?q=龍磐公園" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">享受無邊際的大草原與太平洋陡峭崖岸風光，海風吹拂極度療癒。</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">12:00 - 13:30</span>
+              <span class="timeline-title">後壁湖海鮮大餐</span>
+              <a href="https://maps.google.com?q=後壁湖邱家生魚片" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">品嚐著名的百元厚切生魚片與現炒海鮮，親民價格吃得超滿足。</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">14:00 - 16:00</span>
+              <span class="timeline-title">
+                肥春號 / 樹夏飲事咖啡館
+                <span class="check-badge">出發前再確認</span>
+              </span>
+              <a href="https://maps.google.com?q=肥春號" target="_blank" rel="noopener noreferrer" class="map-btn">📍 Google Maps</a>
+            </div>
+            <div class="timeline-desc">在充滿老宅溫馨感與植栽的花園咖啡館喝甜點咖啡，為旅程畫下完美句點。</div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-header">
+              <span class="timeline-time">16:30 ~</span>
+              <span class="timeline-title">賦歸 / 返回高鐵站</span>
+            </div>
+            <div class="timeline-desc">整理行李收拾心情，搭乘接駁車或開車返回左營高鐵站返家。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>墾丁放鬆假期行程手冊</p>
+    <button class="share-btn" onclick="copyLink()">📋 複製此行程連結分享給朋友</button>
+  </footer>
+
+  <script>
+    function toggleDay(dayId) {
+      const content = document.getElementById(dayId);
+      const icon = document.getElementById(dayId + '-icon');
+      const isCollapsed = content.classList.contains('collapsed');
+
+      if (isCollapsed) {
+        content.classList.remove('collapsed');
+        icon.textContent = '▲';
+      } else {
+        content.classList.add('collapsed');
+        icon.textContent = '▼';
+      }
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('網址已複製到剪貼簿！可以直接貼給朋友囉～');
+      }).catch(() => {
+        alert('複製失敗，請直接複製瀏覽器上方網址。');
+      });
+    }
+  </script>
+</body>
+</html>
+
